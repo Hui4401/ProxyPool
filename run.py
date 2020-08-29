@@ -1,14 +1,20 @@
-from proxypool.scheduler import Scheduler
 import argparse
+from proxypool.scheduler import Scheduler
 
 
-parser = argparse.ArgumentParser(description='ProxyPool')
-parser.add_argument('--processor', type=str, help='processor to run')
+parser = argparse.ArgumentParser()
+parser.add_argument('-p', '--processors', type=str, nargs='*',
+                    choices=['getter', 'tester', 'server'],
+                    help='getter，tester，server，可多选，默认全部运行')
 args = parser.parse_args()
+processors = args.processors
 
 if __name__ == '__main__':
-    # if processor set, just run it
-    if args.processor:
-        getattr(Scheduler(), f'run_{args.processor}')()
+    scheduler = Scheduler()
+    if not processors:
+        scheduler.run()
     else:
-        Scheduler().run()
+        getter = True if 'getter' in processors else False
+        tester = True if 'tester' in processors else False
+        server = True if 'server' in processors else False
+        scheduler.run(getter, tester, server)
