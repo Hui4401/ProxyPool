@@ -1,7 +1,9 @@
+from loguru import logger
 from pyquery import PyQuery as pq
+
 from proxypool.schemas.proxy import Proxy
 from proxypool.crawlers.base import BaseCrawler
-from loguru import logger
+
 
 BASE_URL = 'https://www.xicidaili.com/'
 
@@ -12,7 +14,7 @@ class XicidailiCrawler(BaseCrawler):
     """
     urls = [BASE_URL]
     ignore = True
-    
+
     headers = {
         'User-Agent': 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36'
     }
@@ -28,7 +30,7 @@ class XicidailiCrawler(BaseCrawler):
             for proxy in self.parse(html):
                 logger.info(f'fetched proxy {proxy.string()} from {url}')
                 yield proxy
-    
+
     def parse(self, html):
         """
         parse html file to get proxies

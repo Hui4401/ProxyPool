@@ -1,4 +1,5 @@
 import argparse
+
 from proxypool.scheduler import Scheduler
 
 

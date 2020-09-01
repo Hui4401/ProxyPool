@@ -1,11 +1,12 @@
 import redis
-from proxypool.exceptions import PoolEmptyException
-from proxypool.schemas.proxy import Proxy
-from proxypool.setting import REDIS_HOST, REDIS_PORT, REDIS_PASSWORD, REDIS_DB, REDIS_KEY, PROXY_SCORE_MAX, PROXY_SCORE_MIN, \
-    PROXY_SCORE_INIT
 from random import choice
 from typing import List
 from loguru import logger
+
+from proxypool.exceptions import PoolEmptyException
+from proxypool.schemas.proxy import Proxy
+from proxypool.setting import REDIS_HOST, REDIS_PORT, REDIS_PASSWORD, \
+    REDIS_DB, REDIS_KEY, PROXY_SCORE_MAX, PROXY_SCORE_MIN, PROXY_SCORE_INIT
 from proxypool.utils.proxy import is_valid_proxy, convert_proxy_or_proxies
 
 

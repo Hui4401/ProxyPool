@@ -1,6 +1,8 @@
+from lxml import etree
+
 from proxypool.schemas.proxy import Proxy
 from proxypool.crawlers.base import BaseCrawler
-from lxml import etree
+
 
 BASE_URL = "http://www.xiladaili.com/"
 MAX_PAGE = 5

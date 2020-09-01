@@ -1,7 +1,8 @@
-from retrying import retry
 import asyncio
 import aiohttp
+from retrying import retry
 from loguru import logger
+
 from proxypool.setting import GET_TIMEOUT
 
 

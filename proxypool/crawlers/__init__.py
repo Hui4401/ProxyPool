@@ -1,6 +1,7 @@
 import pkgutil
-from .base import BaseCrawler
 import inspect
+
+from .base import BaseCrawler
 
 
 # load classes subclass of BaseCrawler

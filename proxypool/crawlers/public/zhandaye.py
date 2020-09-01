@@ -1,8 +1,9 @@
+import re
+from loguru import logger
 from pyquery import PyQuery as pq
+
 from proxypool.schemas.proxy import Proxy
 from proxypool.crawlers.base import BaseCrawler
-from loguru import logger
-import re
 
 
 BASE_URL = 'https://www.zdaye.com/dayProxy/{page}.html'
