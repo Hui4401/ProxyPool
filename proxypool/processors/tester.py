@@ -31,7 +31,7 @@ class Tester(object):
         """
         self.redis = RedisClient()
 
-    async def test(self, proxy: Proxy, session):
+    async def test(self, session, proxy: Proxy):
         """
         test single proxy
         :param proxy: Proxy object
@@ -66,16 +66,16 @@ class Tester(object):
         :return:
         """
         # event loop of aiohttp
-        logger.info('stating tester...')
+        logger.debug('stating tester...')
         count = self.redis.count()
-        logger.debug(f'{count} proxies to test')
+        logger.info(f'{count} proxies to test')
         cursor = 0
         async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False)) as session:
             while True:
-                logger.debug(f'testing proxies use cursor {cursor}, count {TEST_BATCH}')
+                logger.info(f'testing proxies use cursor {cursor}, count {TEST_BATCH}')
                 cursor, proxies = self.redis.batch(cursor, count=TEST_BATCH)
                 if proxies:
-                    tasks = [self.test(proxy, session) for proxy in proxies]
+                    tasks = [self.test(session, proxy) for proxy in proxies]
                     await asyncio.gather(*tasks)
                 if not cursor:
                     break

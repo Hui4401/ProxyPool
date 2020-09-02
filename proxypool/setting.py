@@ -45,8 +45,8 @@ API_HOST = env.str('API_HOST', '0.0.0.0')
 API_PORT = env.int('API_PORT', 5555)
 API_THREADED = env.bool('API_THREADED', True)
 
-logger.add(env.str('LOG_RUNTIME_FILE', join(LOG_DIR, 'debug.log')),
-           level='DEBUG', rotation='1 week', retention='10 days', encoding='utf-8')
 logger.add(env.str('LOG_ERROR_FILE', join(LOG_DIR, 'error.log')),
-           level='ERROR', rotation='1 week', encoding='utf-8')
+           level='ERROR', rotation='1 week', retention='10 days', encoding='utf-8')
+logger.add(env.str('LOG_INFO_FILE', join(LOG_DIR, 'info.log')),
+           level='INFO', rotation='1 week', retention='5 days', encoding='utf-8')
 

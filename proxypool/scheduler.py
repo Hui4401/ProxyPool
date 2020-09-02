@@ -19,7 +19,7 @@ class Scheduler():
         getter = Getter()
         loop = 0
         while True:
-            logger.debug(f'getter loop {loop} start...')
+            logger.info(f'getter loop {loop} start...')
             getter.run()
             loop += 1
             time.sleep(cycle)
@@ -28,7 +28,7 @@ class Scheduler():
         tester = Tester()
         loop = 0
         while True:
-            logger.debug(f'tester loop {loop} start...')
+            logger.info(f'tester loop {loop} start...')
             tester.run()
             loop += 1
             time.sleep(cycle)
@@ -39,7 +39,7 @@ class Scheduler():
     def run(self, getter=True, tester=True, server=True):
         processors = []
         try:
-            logger.info('starting proxypool...')
+            logger.debug('starting proxypool...')
             if getter:
                 getter_process = Process(name='getter', target=self.run_getter)
                 processors.append(getter_process)
@@ -52,7 +52,7 @@ class Scheduler():
 
             for p in processors:
                 p.start()
-                logger.info(f'{p.name}, {p.pid}, started')
+                logger.debug(f'{p.name}, {p.pid}, started')
 
             while True:
                 pass
@@ -60,8 +60,8 @@ class Scheduler():
         except KeyboardInterrupt:
             for p in processors:
                 p.terminate()
-                logger.info(f'{p.name}, {p.pid}, terminated')
-            logger.info('proxy terminated')
+                logger.debug(f'{p.name}, {p.pid}, terminated')
+            logger.debug('proxy terminated')
 
 
 if __name__ == '__main__':
