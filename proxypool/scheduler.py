@@ -6,16 +6,17 @@ from loguru import logger
 from proxypool.processors.server import app
 from proxypool.processors.getter import Getter
 from proxypool.processors.tester import Tester
-from proxypool.setting import CYCLE_GETTER, CYCLE_TESTER, \
-    API_HOST, API_THREADED, API_PORT, IS_WINDOWS
+from proxypool.setting import CYCLE_GETTER, CYCLE_TESTER, API_HOST, API_THREADED, \
+    API_PORT, IS_WINDOWS
 
 
 if IS_WINDOWS:
     multiprocessing.freeze_support()
 
 
-class Scheduler():
-    def run_getter(self, cycle=CYCLE_GETTER):
+class Scheduler:
+    @staticmethod
+    def run_getter(cycle=CYCLE_GETTER):
         getter = Getter()
         loop = 0
         while True:
@@ -24,7 +25,8 @@ class Scheduler():
             loop += 1
             time.sleep(cycle)
 
-    def run_tester(self, cycle=CYCLE_TESTER):
+    @staticmethod
+    def run_tester(cycle=CYCLE_TESTER):
         tester = Tester()
         loop = 0
         while True:
@@ -33,7 +35,8 @@ class Scheduler():
             loop += 1
             time.sleep(cycle)
 
-    def run_server(self):
+    @staticmethod
+    def run_server():
         app.run(host=API_HOST, port=API_PORT, threaded=API_THREADED)
 
     def run(self, getter=True, tester=True, server=True):
@@ -49,14 +52,11 @@ class Scheduler():
             if server:
                 server_process = Process(name='server', target=self.run_server)
                 processors.append(server_process)
-
             for p in processors:
                 p.start()
                 logger.debug(f'{p.name}, {p.pid}, started')
-
             while True:
                 pass
-
         except KeyboardInterrupt:
             for p in processors:
                 p.terminate()

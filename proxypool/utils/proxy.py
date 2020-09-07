@@ -41,7 +41,8 @@ def convert_proxy_or_proxies(data):
         for item in data:
             # skip invalid item
             item = item.strip()
-            if not is_valid_proxy(item): continue
+            if not is_valid_proxy(item):
+                continue
             host, port = item.split(':')
             result.append(Proxy(host=host, port=int(port)))
         return result

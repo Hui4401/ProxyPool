@@ -35,10 +35,7 @@ def get_proxy():
     :return: get a random proxy
     """
     conn = get_conn()
-    if conn.count() > 0 :
-        return {'success': True, 'info': conn.random().string()}
-    else:
-        return {'success': False, 'info': 'empty pool!'}
+    return str(conn.random())
 
 
 @app.route('/count')

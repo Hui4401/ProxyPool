@@ -1,12 +1,14 @@
 import asyncio
 from asyncio import TimeoutError
 import aiohttp
-from aiohttp import ClientProxyConnectionError, ServerDisconnectedError, ClientOSError, ClientHttpProxyError
+from aiohttp import ClientProxyConnectionError, ServerDisconnectedError, \
+    ClientOSError, ClientHttpProxyError
 from loguru import logger
 
 from proxypool.schemas import Proxy
 from proxypool.storages.redis import RedisClient
-from proxypool.setting import TEST_TIMEOUT, TEST_BATCH, TEST_URL, TEST_VALID_STATUS, TEST_ANONYMOUS
+from proxypool.setting import TEST_TIMEOUT, TEST_BATCH, TEST_URL, \
+    TEST_VALID_STATUS, TEST_ANONYMOUS
 
 
 EXCEPTIONS = (
@@ -45,12 +47,12 @@ class Tester(object):
                 async with session.get(url, timeout=TEST_TIMEOUT) as response:
                     resp_json = await response.json()
                     origin_ip = resp_json['origin']
-                async with session.get(url, proxy=f'http://{proxy.string()}', timeout=TEST_TIMEOUT) as response:
+                async with session.get(url, proxy=f'http://{str(proxy)}', timeout=TEST_TIMEOUT) as response:
                     resp_json = await response.json()
                     anonymous_ip = resp_json['origin']
                 assert origin_ip != anonymous_ip
                 assert proxy.host == anonymous_ip
-            async with session.get(TEST_URL, proxy=f'http://{proxy.string()}', timeout=TEST_TIMEOUT,
+            async with session.get(TEST_URL, proxy=f'http://{str(proxy)}', timeout=TEST_TIMEOUT,
                                     allow_redirects=False) as response:
                 if response.status in TEST_VALID_STATUS:
                     self.redis.max(proxy)

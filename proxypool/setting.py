@@ -13,7 +13,7 @@ IS_WINDOWS = platform.system().lower() == 'windows'
 ROOT_DIR = dirname(dirname(abspath(__file__)))
 LOG_DIR = join(ROOT_DIR, env.str('LOG_DIR', 'logs'))
 
-# like rediss://[password]@host:port/0
+# like redis://[password]@host:port/0
 REDIS_URL = env.str('REDIS_URL', 'redis://@localhost:6379')
 REDIS_HOST, REDIS_PORT, REDIS_PASSWORD, REDIS_DB = parse_redis_connection_string(REDIS_URL)
 REDIS_KEY = env.str('REDIS_KEY', 'proxies')
@@ -49,4 +49,3 @@ logger.add(env.str('LOG_ERROR_FILE', join(LOG_DIR, 'error.log')),
            level='ERROR', rotation='1 week', retention='10 days', encoding='utf-8')
 logger.add(env.str('LOG_INFO_FILE', join(LOG_DIR, 'info.log')),
            level='INFO', rotation='1 week', retention='5 days', encoding='utf-8')
-

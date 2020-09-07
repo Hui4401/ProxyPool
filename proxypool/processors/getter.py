@@ -39,7 +39,7 @@ class Getter(object):
             if proxies:
                 for proxy in proxies:
                     self.redis.add(proxy)
-                    logger.info(f'crawled {proxy} from {crawler}')
+                logger.info(f'crawled {len(proxies)} proxies from {crawler}')
             else:
                 logger.info(f'cannot crawl proxies from {crawler}')
 

@@ -28,7 +28,7 @@ class XicidailiCrawler(BaseCrawler):
             logger.info(f'fetching {url}')
             html = self.fetch(url, headers=self.headers)
             for proxy in self.parse(html):
-                logger.info(f'fetched proxy {proxy.string()} from {url}')
+                logger.info(f'fetched proxy {str(proxy)} from {url}')
                 yield proxy
 
     def parse(self, html):
