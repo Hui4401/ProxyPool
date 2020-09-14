@@ -1,13 +1,14 @@
-import re
-from loguru import logger
+import asyncio
+import aiohttp
 from pyquery import PyQuery as pq
-
 from proxypool.schemas.proxy import Proxy
 from proxypool.crawlers.base import BaseCrawler
+import re
 
 
 BASE_URL = 'https://www.zdaye.com/dayProxy/{page}.html'
 MAX_PAGE = 5
+
 
 class ZhandayeCrawler(BaseCrawler):
     """
@@ -20,25 +21,27 @@ class ZhandayeCrawler(BaseCrawler):
     urls = []
     ignore = True
 
-    def crawl(self):
-        self.crawl_catalog()
-        yield from super().crawl()
+    async def crawl(self):
+        await self.crawl_catalog()
+        await super().crawl()
 
-    def crawl_catalog(self):
-        for url in self.urls_catalog:
-            logger.info(f'fetching {url}')
-            html = self.fetch(url, headers=self.headers)
-            self.parse_catalog(html)
+    async def crawl_catalog(self):
+        async with aiohttp.ClientSession(
+                connector=aiohttp.TCPConnector(ssl=False)) as session:
+            tasks = [self.fetch(session, url, headers=self.headers) for url in self.urls_catalog]
+            results = await asyncio.gather(*tasks)
+            for result in results:
+                if result:
+                    self.parse_catalog(result)
 
     def parse_catalog(self, html):
         """
-        parse html file to get proxies
+        parse catalog_html file to get urls
         :return:
         """
         doc = pq(html)
         for item in doc('#J_posts_list .thread_item div div p a').items():
             url = 'https://www.zdaye.com' + item.attr('href')
-            logger.info(f'get detail url: {url}')
             self.urls.append(url)
 
     def parse(self, html):
