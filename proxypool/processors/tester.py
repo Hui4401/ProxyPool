@@ -6,7 +6,7 @@ from aiohttp import ClientProxyConnectionError, ServerDisconnectedError, \
 from loguru import logger
 
 from proxypool.schemas import Proxy
-from proxypool.storages.redis import RedisClient
+from proxypool.storages.redis_client import RedisClient
 from proxypool.setting import TEST_TIMEOUT, TEST_BATCH, TEST_URL, \
     TEST_VALID_STATUS, TEST_ANONYMOUS
 

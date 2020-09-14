@@ -10,5 +10,8 @@ def parse_redis_connection_string(connection_string):
     :return:
     """
     result = re.match(r'rediss?://(.*?)@(.*?):(\d+)/(\d+)', connection_string)
-    return (result.group(2), int(result.group(3)), (result.group(1) or None),
-            (result.group(4) or 0) if result else ('localhost', 6379, None))
+    if result:
+        return result.group(2), result.group(3), \
+               result.group(1) or None, result.group(4) or 0
+    else:
+        return 'localhost', 6379, None, 0
