@@ -1,9 +1,10 @@
 import asyncio
 import aiohttp
 from pyquery import PyQuery as pq
+import re
+
 from proxypool.schemas.proxy import Proxy
 from proxypool.crawlers.base import BaseCrawler
-import re
 
 
 BASE_URL = 'https://www.zdaye.com/dayProxy/{page}.html'

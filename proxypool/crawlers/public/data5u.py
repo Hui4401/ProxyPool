@@ -5,7 +5,6 @@ from pyquery import PyQuery as pq
 
 from proxypool.schemas.proxy import Proxy
 from proxypool.crawlers.base import BaseCrawler
-from proxypool.setting import GET_TIMEOUT
 
 
 BASE_URL = 'http://www.data5u.com'

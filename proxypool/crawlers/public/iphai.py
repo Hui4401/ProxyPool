@@ -6,6 +6,7 @@ from proxypool.schemas.proxy import Proxy
 
 BASE_URL = 'http://www.iphai.com/'
 
+
 class IPHaiCrawler(BaseCrawler):
     """
     iphai crawler, http://www.iphai.com/

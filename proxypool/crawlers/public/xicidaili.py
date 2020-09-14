@@ -1,8 +1,9 @@
-from loguru import logger
+import asyncio
+import aiohttp
 from pyquery import PyQuery as pq
-
 from proxypool.schemas.proxy import Proxy
 from proxypool.crawlers.base import BaseCrawler
+from loguru import logger
 
 
 BASE_URL = 'https://www.xicidaili.com/'
@@ -20,16 +21,17 @@ class XicidailiCrawler(BaseCrawler):
     }
 
     @logger.catch
-    def crawl(self):
-        """
-        crawl main method
-        """
-        for url in self.urls:
-            logger.info(f'fetching {url}')
-            html = self.fetch(url, headers=self.headers)
-            for proxy in self.parse(html):
-                logger.info(f'fetched proxy {str(proxy)} from {url}')
-                yield proxy
+    async def crawl(self):
+        proxies = []
+        async with aiohttp.ClientSession(
+                connector=aiohttp.TCPConnector(ssl=False)) as session:
+            tasks = [self.fetch(session, url, headers=self.headers) for url in self.urls]
+            results = await asyncio.gather(*tasks)
+            for result in results:
+                if result:
+                    for proxy in self.parse(result):
+                        proxies.append(proxy)
+            return proxies
 
     def parse(self, html):
         """
@@ -51,4 +53,3 @@ if __name__ == '__main__':
     crawler = XicidailiCrawler()
     for proxy in crawler.run():
         print(proxy)
-
