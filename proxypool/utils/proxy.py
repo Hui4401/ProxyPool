@@ -1,8 +1,8 @@
 from proxypool.schemas import Proxy
 
 
-def is_valid_proxy(data):
-    if data.__contains__(':'):
+def is_valid_proxy(data: str):
+    if ':' in data:
         ip = data.split(':')[0]
         port = data.split(':')[1]
         return is_ip_valid(ip) and is_port_valid(port)
@@ -35,11 +35,9 @@ def convert_proxy_or_proxies(data):
     """
     if not data:
         return None
-    # if list of proxies
     if isinstance(data, list):
         result = []
         for item in data:
-            # skip invalid item
             item = item.strip()
             if not is_valid_proxy(item):
                 continue

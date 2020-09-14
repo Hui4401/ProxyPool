@@ -49,6 +49,6 @@ class XicidailiCrawler(BaseCrawler):
 
 if __name__ == '__main__':
     crawler = XicidailiCrawler()
-    for proxy in crawler.crawl():
+    for proxy in crawler.run():
         print(proxy)
 

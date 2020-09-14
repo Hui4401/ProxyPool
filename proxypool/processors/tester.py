@@ -47,13 +47,14 @@ class Tester(object):
                 async with session.get(url, timeout=TEST_TIMEOUT) as response:
                     resp_json = await response.json()
                     origin_ip = resp_json['origin']
-                async with session.get(url, proxy=f'http://{str(proxy)}', timeout=TEST_TIMEOUT) as response:
+                async with session.get(url, proxy=f'http://{str(proxy)}',
+                                       timeout=TEST_TIMEOUT) as response:
                     resp_json = await response.json()
                     anonymous_ip = resp_json['origin']
                 assert origin_ip != anonymous_ip
                 assert proxy.host == anonymous_ip
-            async with session.get(TEST_URL, proxy=f'http://{str(proxy)}', timeout=TEST_TIMEOUT,
-                                    allow_redirects=False) as response:
+            async with session.get(TEST_URL, proxy=f'http://{str(proxy)}',
+                                   timeout=TEST_TIMEOUT, allow_redirects=False) as response:
                 if response.status in TEST_VALID_STATUS:
                     self.redis.max(proxy)
                 else:

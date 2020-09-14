@@ -29,5 +29,5 @@ class IP3366Crawler(BaseCrawler):
 
 if __name__ == '__main__':
     crawler = IP3366Crawler()
-    for proxy in crawler.crawl():
+    for proxy in crawler.run():
         print(proxy)

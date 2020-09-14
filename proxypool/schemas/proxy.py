@@ -1,18 +1,17 @@
-from attr import attrs, attr
+import attr
 
 
-@attrs
+@attr.s(auto_attribs=True)
 class Proxy(object):
     """
     proxy schema
     """
-    host = attr(type=str, default=None)
-    port = attr(type=int, default=None)
+    host: str = None
+    port: int = None
     
     def __str__(self):
         """
-        to string, for print
-        :return:
+        to str like 8.8.8.8:8888
         """
         return f'{self.host}:{self.port}'
 
@@ -20,4 +19,3 @@ class Proxy(object):
 if __name__ == '__main__':
     proxy = Proxy(host='8.8.8.8', port=8888)
     print('proxy', proxy)
-    print(str(proxy))

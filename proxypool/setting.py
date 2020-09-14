@@ -18,12 +18,11 @@ REDIS_URL = env.str('REDIS_URL', 'redis://@localhost:6379')
 REDIS_HOST, REDIS_PORT, REDIS_PASSWORD, REDIS_DB = parse_redis_connection_string(REDIS_URL)
 REDIS_KEY = env.str('REDIS_KEY', 'proxies')
 
-# definition of proxy scores
+# proxy 分数设置
 PROXY_SCORE_MAX = 100
 PROXY_SCORE_MIN = 0
 PROXY_SCORE_INIT = 10
 
-# definition of proxy number
 PROXY_NUMBER_MAX = 50000
 PROXY_NUMBER_MIN = 0
 
@@ -36,11 +35,10 @@ TEST_URL = env.str('TEST_URL', 'https://www.baidu.com')
 TEST_BATCH = env.int('TEST_BATCH', 20)
 TEST_TIMEOUT = env.int('TEST_TIMEOUT', 10)
 
-# only save anonymous proxy
+# 是否仅保存匿名代理
 TEST_ANONYMOUS = True
 TEST_VALID_STATUS = env.list('TEST_VALID_STATUS', [200])
 
-# definition of api
 API_HOST = env.str('API_HOST', '0.0.0.0')
 API_PORT = env.int('API_PORT', 5555)
 API_THREADED = env.bool('API_THREADED', True)

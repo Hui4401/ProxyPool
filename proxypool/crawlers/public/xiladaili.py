@@ -30,5 +30,5 @@ class XiladailiCrawler(BaseCrawler):
 
 if __name__ == '__main__':
     crawler = XiladailiCrawler()
-    for proxy in crawler.crawl():
+    for proxy in crawler.run():
         print(proxy)

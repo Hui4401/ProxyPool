@@ -33,7 +33,7 @@ class RedisClient(object):
         :param score: int score
         :return: result
         """
-        if not is_valid_proxy(f'{proxy.host}:{proxy.port}'):
+        if not is_valid_proxy(str(proxy)):
             logger.info(f'invalid proxy {proxy}, throw it')
             return
         if not self.exists(proxy):
@@ -118,4 +118,3 @@ if __name__ == '__main__':
     conn = RedisClient()
     result = conn.random()
     print(result)
-

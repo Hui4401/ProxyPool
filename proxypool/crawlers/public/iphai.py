@@ -29,8 +29,8 @@ class IPHaiCrawler(BaseCrawler):
                 proxy = Proxy(host=address.strip(), port=int(port.strip()))
                 yield proxy
 
+
 if __name__ == '__main__':
     crawler = IPHaiCrawler()
-    for proxy in crawler.crawl():
+    for proxy in crawler.run():
         print(proxy)
-

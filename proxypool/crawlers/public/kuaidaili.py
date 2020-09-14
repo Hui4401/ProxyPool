@@ -30,5 +30,5 @@ class KuaidailiCrawler(BaseCrawler):
 
 if __name__ == '__main__':
     crawler = KuaidailiCrawler()
-    for proxy in crawler.crawl():
+    for proxy in crawler.run():
         print(proxy)
