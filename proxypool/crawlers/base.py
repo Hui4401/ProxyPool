@@ -22,6 +22,9 @@ class BaseCrawler(object):
 
     @logger.catch
     async def crawl(self):
+        """
+        crawl main method
+        """
         proxies = []
         async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False)) as session:
             tasks = [self.fetch(session, url) for url in self.urls]
@@ -33,7 +36,4 @@ class BaseCrawler(object):
             return proxies
 
     def run(self):
-        """
-        crawl main method
-        """
         return asyncio.run(self.crawl())
