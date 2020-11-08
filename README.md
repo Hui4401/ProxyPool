@@ -193,8 +193,4 @@ class Daili66Crawler(BaseCrawler):
 * urls 变量即为爬取的代理网站网址列表，可以用程序定义也可写成固定内容。
 * parse 方法接收一个参数即 html，代理网址的 html，在 parse 方法里只需要写好 html 的解析，解析出 host 和 port，并构建 Proxy 对象 yield 返回即可。
 
-网页的爬取不需要实现，BaseCrawler 已经有了默认实现，如需更改爬取方式，重写 crawl 方法即可。
-
-## LICENSE
-
-MIT
+网页的爬取不需要实现，BaseCrawler 已经有了默认实现，如需更改爬取方式，重写 crawl，fetch 方法即可。默认为协程方式爬取，若要同步爬取，重写 run，crawl，fetch方法。
