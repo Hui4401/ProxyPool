@@ -7,7 +7,7 @@ services:
         container_name: proxy-redis
         image: redis:6
         volumes:
-            - /tmp/proxy-redis/data:/data
+            - /tmp/ProxyPool/redis/data:/data
         expose:
             - "6379"
     proxy:
@@ -15,7 +15,7 @@ services:
         # 基于Dockerfile制作镜像并创建容器
         build: .
         volumes:
-            - ./logs:/root/ProxyPool/logs
+            - /tmp/ProxyPool/logs:/root/ProxyPool/logs
         environment:
             REDIS_URL: redis://@redis:6379/0
         ports:
