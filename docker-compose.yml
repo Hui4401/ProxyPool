@@ -1,12 +1,3 @@
-# docker-compose项目目录说明：
-#
-# project
-# |----redis
-# |    |----data
-# |----ProxyPool
-# |    | ...
-# | docker-compose.yml
-
 version: '3'
 
 services:
@@ -14,20 +5,20 @@ services:
     redis:
         # 自定义容器名
         container_name: proxy-redis
-        image: redis:6.0
+        image: redis:6
         volumes:
-            - ./redis/data:/data
+            - /tmp/proxy-redis/data:/data
         expose:
-            - "3306"
+            - "6379"
     proxy:
         container_name: proxy-app
         # 基于Dockerfile制作镜像并创建容器
-        build: ./ProxyPool
+        build: .
         volumes:
-            - ./ProxyPool/logs:/root/ProxyPool/logs
-        links:
-            - redis
+            - ./logs:/root/ProxyPool/logs
         environment:
             REDIS_URL: redis://@redis:6379/0
         ports:
             - "5555:5555"
+        depends_on:
+            - redis
